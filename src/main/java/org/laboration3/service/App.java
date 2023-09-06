@@ -1,4 +1,4 @@
-package org.example;
+package org.laboration3.service;
 
 public class App {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package org.example;
+package org.laboration3.service;
 
 import org.junit.jupiter.api.Test;
 
