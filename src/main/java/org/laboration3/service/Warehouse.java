@@ -6,11 +6,8 @@ import org.laboration3.entities.Product;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Stream;
-
-
 public class Warehouse {
-    Product product1 = new Product(
+    private Product product1 = new Product(
             5,
             "Tröja",
             Categories.clothes,
@@ -22,8 +19,10 @@ public class Warehouse {
 
 
     public void addProduct(Product p) {
-        // Check if name is not an empty string and id not exist
-        if (!p.name().isEmpty() || !productsArr.contains(p)) {
+        // Check if name is not an empty string and if id already exist
+        if (!p.name().isEmpty() &&
+                productsArr.stream()
+                        .noneMatch(productId -> productId.id() == p.id())) {
             productsArr.add(p);
         }
     }
@@ -94,10 +93,10 @@ public class Warehouse {
         return productsInCategory.size();
     }
 
-    public Map<Character, Integer> getMap(Warehouse productArr) {
+    public Map<Character, Integer> getMap() {
         //List with only the names
         List<String> productNames = new ArrayList<>();
-        for (Product product : productArr.getProductsArr()) {
+        for (Product product : productsArr) {
             productNames.add(product.name());
         }
 
@@ -126,7 +125,7 @@ public class Warehouse {
                 .sorted(Comparator.comparing(Product::createdDate).reversed())
                 .toList();
 
-        if (maxRatingProduct.isEmpty()){
+        if (maxRatingProduct.isEmpty()) {
             System.out.println("Det fanns ingen produkt med högsta rating");
         }
 

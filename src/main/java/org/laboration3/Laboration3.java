@@ -18,7 +18,7 @@ public class Laboration3 {
 
         Product product2 = new Product(
                 2,
-                "D-vitamin",
+                "",
                 Categories.health,
                 2,
                 LocalDateTime.of(2023, 9, 4, 15, 0),
@@ -65,7 +65,7 @@ public class Laboration3 {
         warehouse.addProduct(product6);
 
         // Example to show get map function
-        Map<Character, Integer> mapExample = warehouse.getMap(warehouse);
+        Map<Character, Integer> mapExample = warehouse.getMap();
 
         for (Map.Entry<Character, Integer> p : mapExample.entrySet()) {
             System.out.println("Key: " + p.getKey() + " : " + "Value " + p.getValue());
