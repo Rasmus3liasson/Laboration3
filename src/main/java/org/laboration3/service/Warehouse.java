@@ -6,6 +6,7 @@ import org.laboration3.entities.Product;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Stream;
 
 
 public class Warehouse {
@@ -116,5 +117,19 @@ public class Warehouse {
             }
         }
         return map;
+    }
+
+    public List<Product> getRecentMaxRating() {
+        List<Product> maxRatingProduct = productsArr.stream()
+                .filter(p -> p.rating() == 10 &&
+                        p.createdDate().getMonth() == LocalDateTime.now().getMonth())
+                .sorted(Comparator.comparing(Product::createdDate).reversed())
+                .toList();
+
+        if (maxRatingProduct.isEmpty()){
+            System.out.println("Det fanns ingen produkt med högsta rating");
+        }
+
+        return maxRatingProduct;
     }
 }
