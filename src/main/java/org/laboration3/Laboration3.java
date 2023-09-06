@@ -1,5 +1,6 @@
 package org.laboration3;
 
+import org.laboration3.entities.Categories;
 import org.laboration3.entities.Product;
 import org.laboration3.service.Warehouse;
 
@@ -16,24 +17,24 @@ public class Laboration3 {
 
         Product product2 = new Product(
                 2,
-                "dhskjd",
-                "Category1",
+                "D-vitamin",
+                Categories.health,
                 2,
                 LocalDateTime.of(2023, 9, 4, 15,0),
                 LocalDateTime.of(2023, 9, 4, 15,0)
         );
         Product product3 = new Product(
                 7,
-                "phskjd",
-                "Category1",
+                "Knäskydd",
+                Categories.workout,
                 5,
                 LocalDateTime.of(2023, 9, 4, 15,0),
                 LocalDateTime.of(2023, 9, 4, 15,0)
         );
         Product product4 = new Product(
                 7,
-                "phskjd",
-                "Category2",
+                "Byxa",
+                Categories.clothes,
                 5,
                 LocalDateTime.of(2023, 9, 4, 15,0),
                 LocalDateTime.of(2023, 9, 4, 16,0)
@@ -44,7 +45,7 @@ public class Laboration3 {
         warehouse.addProduct(product3);
         warehouse.addProduct(product4);
 
-        for (Product product : warehouse.getProductThatBeenModified()){
+        for (Product product : warehouse.getProductBasedOnCategory(Categories.clothes)){
 
             System.out.println(product);
         }

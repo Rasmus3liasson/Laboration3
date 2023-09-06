@@ -1,5 +1,6 @@
 package org.laboration3.service;
 
+import org.laboration3.entities.Categories;
 import org.laboration3.entities.Product;
 
 
@@ -13,8 +14,8 @@ import java.util.List;
 public class Warehouse {
     Product product1 = new Product(
             5,
-            "Example",
-            "Category1",
+            "Tröja",
+            Categories.clothes,
             5,
             LocalDateTime.of(2023, 9, 4, 15,0),
             LocalDateTime.of(2023, 9, 4, 15,0)
@@ -30,7 +31,7 @@ public class Warehouse {
         }
     }
 
-    public void modifyProduct(int productId, String newName, String newCategory, int newRating) {
+    public void modifyProduct(int productId, String newName, Categories newCategory, int newRating) {
         productsArr.stream()
                 .filter(p -> p.id() == productId)
                 .findFirst()
@@ -46,7 +47,7 @@ public class Warehouse {
         return new ArrayList<>(productsArr);
     }
 
-    public List<Product> getProductBasedOnCategory(String category) {
+    public List<Product> getProductBasedOnCategory(Categories category) {
         List<Product> sortedByCategory = productsArr.stream()
                 .filter(p -> p.category().equals(category))
                 .sorted(Comparator.comparing(p-> p.name().toLowerCase()))
@@ -65,7 +66,6 @@ public class Warehouse {
         List<Product> modifiedProducts = productsArr.stream()
                 .filter(p-> !p.createdDate().isEqual(p.lastModifiedDate()))
                 .toList();
-
         return modifiedProducts;
     }
 }
