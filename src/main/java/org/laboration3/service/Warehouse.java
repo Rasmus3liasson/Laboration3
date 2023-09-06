@@ -5,10 +5,7 @@ import org.laboration3.entities.Product;
 
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 
 public class Warehouse {
@@ -17,14 +14,13 @@ public class Warehouse {
             "Tröja",
             Categories.clothes,
             5,
-            LocalDateTime.of(2023, 9, 4, 15,0),
-            LocalDateTime.of(2023, 9, 4, 15,0)
+            LocalDateTime.of(2023, 9, 4, 15, 0),
+            LocalDateTime.of(2023, 9, 4, 15, 0)
     );
     private final List<Product> productsArr = new ArrayList<>(Collections.singleton(product1));
 
 
-
-    public void addProduct(Product p){
+    public void addProduct(Product p) {
         // Check if name is not an empty string and id not exist
         if (!p.name().isEmpty() || !productsArr.contains(p)) {
             productsArr.add(p);
@@ -36,10 +32,10 @@ public class Warehouse {
                 .filter(p -> p.id() == productId)
                 .findFirst()
                 .ifPresent(p -> {
-            Product changedProduct = new Product(productId,newName,newCategory,newRating,p.createdDate(),LocalDateTime.now());
-            // replacing with the modified product
-            productsArr.set(productsArr.indexOf(p),changedProduct);
-        });
+                    Product changedProduct = new Product(productId, newName, newCategory, newRating, p.createdDate(), LocalDateTime.now());
+                    // replacing with the modified product
+                    productsArr.set(productsArr.indexOf(p), changedProduct);
+                });
     }
 
 
@@ -50,22 +46,75 @@ public class Warehouse {
     public List<Product> getProductBasedOnCategory(Categories category) {
         List<Product> sortedByCategory = productsArr.stream()
                 .filter(p -> p.category().equals(category))
-                .sorted(Comparator.comparing(p-> p.name().toLowerCase()))
+                .sorted(Comparator.comparing(p -> p.name().toLowerCase()))
                 .toList();
         return sortedByCategory;
     }
 
     public List<Product> getProductCreatedAfterDate(LocalDateTime date) {
         List<Product> createdAfterDate = productsArr.stream()
-                .filter(p-> p.createdDate().isAfter(date))
+                .filter(p -> p.createdDate().isAfter(date))
                 .toList();
         return createdAfterDate;
     }
 
     public List<Product> getProductThatBeenModified() {
         List<Product> modifiedProducts = productsArr.stream()
-                .filter(p-> !p.createdDate().isEqual(p.lastModifiedDate()))
+                .filter(p -> !p.createdDate().isEqual(p.lastModifiedDate()))
                 .toList();
         return modifiedProducts;
+    }
+
+
+    // VG assignments
+    public List<Categories> getCategoriesWithProducts() {
+        List<Categories> categoriesContainsProduct = new ArrayList<>();
+
+        for (Product p : productsArr) {
+            Categories category = p.category();
+            // check if category exist before adding
+            if (!categoriesContainsProduct.contains(category)) {
+                categoriesContainsProduct.add(category);
+            }
+        }
+
+        return categoriesContainsProduct;
+    }
+
+    public int getHowManyProductsRelatedToCategory(Categories category) {
+        List<Product> productsInCategory = new ArrayList<>();
+
+        for (Product p : productsArr) {
+            if (p.category() == category) {
+                productsInCategory.add(p);
+            }
+        }
+
+        return productsInCategory.size();
+    }
+
+    public Map<Character, Integer> getMap(Warehouse productArr) {
+        //List with only the names
+        List<String> productNames = new ArrayList<>();
+        for (Product product : productArr.getProductsArr()) {
+            productNames.add(product.name());
+        }
+
+        Map<Character, Integer> map = new HashMap<>();
+        for (String productName : productNames) {
+            //Check to see it's not empty
+            if (productName != null && !productName.isEmpty()) {
+                char firstLetter = productName.charAt(0);
+
+                // Sets the values to key and update map
+                Integer count = map.get(firstLetter);
+                if (count == null) {
+                    map.put(firstLetter, 1);
+                } else {
+                    map.put(firstLetter, count + 1);
+                }
+            }
+        }
+        return map;
     }
 }
