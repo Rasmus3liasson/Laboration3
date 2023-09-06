@@ -3,8 +3,9 @@ package org.laboration3;
 import org.laboration3.entities.Product;
 import org.laboration3.service.Warehouse;
 
-import java.time.LocalDate;
-import java.util.List;
+
+import java.time.LocalDateTime;
+
 
 public class Laboration3 {
     public static void main(String[] args) {
@@ -18,24 +19,24 @@ public class Laboration3 {
                 "dhskjd",
                 "Category1",
                 2,
-                LocalDate.now(),
-                LocalDate.now()
+                LocalDateTime.of(2023, 9, 4, 15,0),
+                LocalDateTime.of(2023, 9, 4, 15,0)
         );
         Product product3 = new Product(
                 7,
                 "phskjd",
                 "Category1",
                 5,
-                LocalDate.now(),
-                LocalDate.now()
+                LocalDateTime.of(2023, 9, 4, 15,0),
+                LocalDateTime.of(2023, 9, 4, 15,0)
         );
         Product product4 = new Product(
                 7,
                 "phskjd",
                 "Category2",
                 5,
-                LocalDate.now(),
-                LocalDate.now()
+                LocalDateTime.of(2023, 9, 4, 15,0),
+                LocalDateTime.of(2023, 9, 4, 16,0)
         );
 
 
@@ -43,10 +44,7 @@ public class Laboration3 {
         warehouse.addProduct(product3);
         warehouse.addProduct(product4);
 
-        warehouse.modifyProduct(2,"anders","Category1",7);
-
-
-        for (Product product : warehouse.getProductBasedOnCategory("Category1")) {
+        for (Product product : warehouse.getProductThatBeenModified()){
 
             System.out.println(product);
         }

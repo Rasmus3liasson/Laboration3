@@ -2,7 +2,8 @@ package org.laboration3.service;
 
 import org.laboration3.entities.Product;
 
-import java.time.LocalDate;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,8 +16,8 @@ public class Warehouse {
             "Example",
             "Category1",
             5,
-            LocalDate.now(),
-            LocalDate.now()
+            LocalDateTime.of(2023, 9, 4, 15,0),
+            LocalDateTime.of(2023, 9, 4, 15,0)
     );
     private final List<Product> productsArr = new ArrayList<>(Collections.singleton(product1));
 
@@ -34,7 +35,7 @@ public class Warehouse {
                 .filter(p -> p.id() == productId)
                 .findFirst()
                 .ifPresent(p -> {
-            Product changedProduct = new Product(productId,newName,newCategory,newRating,p.createdDate(),LocalDate.now());
+            Product changedProduct = new Product(productId,newName,newCategory,newRating,p.createdDate(),LocalDateTime.now());
             // replacing with the modified product
             productsArr.set(productsArr.indexOf(p),changedProduct);
         });
@@ -51,5 +52,20 @@ public class Warehouse {
                 .sorted(Comparator.comparing(p-> p.name().toLowerCase()))
                 .toList();
         return sortedByCategory;
+    }
+
+    public List<Product> getProductCreatedAfterDate(LocalDateTime date) {
+        List<Product> createdAfterDate = productsArr.stream()
+                .filter(p-> p.createdDate().isAfter(date))
+                .toList();
+        return createdAfterDate;
+    }
+
+    public List<Product> getProductThatBeenModified() {
+        List<Product> modifiedProducts = productsArr.stream()
+                .filter(p-> !p.createdDate().isEqual(p.lastModifiedDate()))
+                .toList();
+
+        return modifiedProducts;
     }
 }
