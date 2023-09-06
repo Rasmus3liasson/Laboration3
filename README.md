@@ -1,38 +1,35 @@
-maven-java-template
-===================
+# Laboration 3
 
-This is the base for all standard standalone java based application.
+Den här uppgiften går ut på att använda Junit5 för att skriva enhetstester samt functionell programmering med java 8 streams. Vi kommerimplementera en mindre applikation för att hantera Produkter. Alla publika metoder i klasserna ska ha tester för sin funktionalitet.
 
-How to use ?
-=====================
+## Uppgift för G:
 
-1. Clone this repository.
+Kodens publika gränssnitt mot omvärlden kommer att vara en klass kallad Warehouse placerad i ett paket kallat service. Metoder som returnerar objektreferenser eller tar sådana som inparametrar ska endast använda immutable objekt. Det kan därför vara nödvändigt att skapa speciella objekt med hjälp av records i Java som information kopieras över till. Tänk också på att inte returnera en referens direkt till t.ex. en ArrayList som används för lagring av information för då kan mottagaren modifiera innehållet i listan utan att gå via våra publika metoder.
 
-2. Change the artifactId in your pom.xml with the project name.
+Vårt lager ska hantera produkter som minst har följande attribut:
+- Ett unikt id.
+- Ett namn.
+- Tillhör en kategori som är en enum datatyp.
+- En rating tex mellan 0-10.
+- Ett datum för när produkten skapades som ej ska gå att ändra.
+- Ett datum för när den modifierades senast.
 
-3. Run mvn test, you should get "BUILD SUCCESS".
+För att hantera detta skapar vi en klass kallad Product som läggs i ett paket kallat entities.
 
-4. Import the project to your ide.
+Följande funktionalitet ska finnas på Warehouse som publika metoder med tillhörande tester. Kan en metod generera fel ska metoden ha ett test för lyckad körning och ett för felfallet. Flera av metoderna löses enklast med Java 8 streams:
 
-5. Add all your packages and source code to
-    * src/main/java
+- Lägga till en ny produkt. (Bör ha någon enkel validering så att produkter utan namn ej kan läggas till)
+- Modifiera en befintlig produkt. (Byta namn, kategori, rating)
+- Hämta alla produkter.
+- Hämta en produkt genom produktens id.
+- Hämta alla produkter som hör till en kategori sorterat efter produktnamn A-Z.
+- Hämta alla produkter skapade efter ett angivet datum. (Nya produkter sen sist)
+- Hämta alla produkter som modifierats sen de skapades. (Datum ej samma)
 
-6. Add the source code for test into
-    * src/test/java
+## Uppgift för VG:
 
-Goals
-=========
-1. Clean:
-    * mvn clean
-
-2. Build:
-    * mvn compile
-    * mvn test
-    * mvn package
-    * mvn install
-    * mvn exec:java -Dexec.mainClass="com.example.Class"
-
-### Plugins
-* Junit5
-* AssertJ
-* Mockito
+Utöka Warehouse med ytterligare funktioner för:
+- Hämta alla kategorier som har minst 1 produkt kopplad.
+- Hämta hur många produkter det finns i en given kategori.
+- Hämta en Map som innehåller alla bokstäver som produktnamn börjar på som nyckel och antalet produkter som börjar på den bokstaven som value.
+- Hämta alla produkter med max rating, skapade denna månad och sorterat på datum med nyast först.
