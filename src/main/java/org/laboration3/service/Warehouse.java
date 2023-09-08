@@ -6,6 +6,7 @@ import org.laboration3.entities.Product;
 
 import java.time.LocalDateTime;
 import java.util.*;
+
 public class Warehouse {
     private Product product1 = new Product(
             5,
@@ -24,18 +25,25 @@ public class Warehouse {
                 productsArr.stream()
                         .noneMatch(productId -> productId.id() == p.id())) {
             productsArr.add(p);
+        } else {
+            throw new IllegalArgumentException("Kan inte lägga till product " + p.id());
         }
     }
 
     public void modifyProduct(int productId, String newName, Categories newCategory, int newRating) {
-        productsArr.stream()
+        Product product = productsArr.stream()
                 .filter(p -> p.id() == productId)
                 .findFirst()
-                .ifPresent(p -> {
-                    Product changedProduct = new Product(productId, newName, newCategory, newRating, p.createdDate(), LocalDateTime.now());
-                    // replacing with the modified product
-                    productsArr.set(productsArr.indexOf(p), changedProduct);
-                });
+                .orElse(null);
+
+        if (product != null) {
+            Product changedProduct = new Product(productId, newName, newCategory, newRating, product.createdDate(), LocalDateTime.now());
+
+            // replace with the modified product
+            productsArr.set(productsArr.indexOf(product), changedProduct);
+        } else {
+            throw new NoSuchElementException("Produkt med id " + productId + " kunde inte lokaliseras");
+        }
     }
 
 
