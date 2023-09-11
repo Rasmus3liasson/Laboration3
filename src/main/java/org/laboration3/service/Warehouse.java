@@ -8,15 +8,8 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 public class Warehouse {
-    private Product product1 = new Product(
-            5,
-            "Tröja",
-            Categories.clothes,
-            5,
-            LocalDateTime.of(2023, 9, 4, 15, 0),
-            LocalDateTime.of(2023, 9, 4, 15, 0)
-    );
-    private final List<Product> productsArr = new ArrayList<>(Collections.singleton(product1));
+
+    private final List<Product> productsArr = new ArrayList<>();
 
 
     public void addProduct(Product p) {
@@ -134,7 +127,8 @@ public class Warehouse {
                 .toList();
 
         if (maxRatingProduct.isEmpty()) {
-            System.out.println("Det fanns ingen produkt med högsta rating");
+            throw new NoSuchElementException("Det fanns ingen produkt med högsta rating");
+
         }
 
         return maxRatingProduct;
