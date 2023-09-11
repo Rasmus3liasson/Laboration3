@@ -93,6 +93,25 @@ public class WarehouseTest {
     }
 
     @Test
+    void testGetProductBasedOnId() {
+
+        warehouse.addProduct(product1);
+        warehouse.addProduct(product5);
+
+        List<Product> idList = warehouse.getProductBasedOnId(4);
+        assertThat(idList.contains(product5));
+        assertThat(idList).containsOnly(product5);
+
+
+        assertThrows(NoSuchElementException.class, () -> {
+            warehouse.getProductBasedOnId(9);
+
+        });
+
+    }
+
+
+    @Test
     void testGetProductsBasedOnCategory() {
 
         warehouse.addProduct(product1);
@@ -105,12 +124,12 @@ public class WarehouseTest {
         assertNotNull(productOrderBasedOnCategory);
 
         // Gets the names for to check the order
-        List<String> actualOrder = productOrderBasedOnCategory.stream()
+        List<String> order = productOrderBasedOnCategory.stream()
                 .map(Product::name)
                 .collect(Collectors.toList());
 
         // Check that the actual order matches the expected order
-        assertEquals(List.of("Basket", "Football"), actualOrder);
+        assertEquals(List.of("Basket", "Football"), order);
 
         // Check that List only contains sport categories
         assertThat(productOrderBasedOnCategory).allMatch(product -> product.category() == Categories.sport);
@@ -134,43 +153,43 @@ public class WarehouseTest {
         assertNotNull(productsCreatedAfterSpecificDate);
 
         // Check that the products that have been created after och equal will be returned.
-        assertThat(productsCreatedAfterSpecificDate).containsOnly(product2,product3);
+        assertThat(productsCreatedAfterSpecificDate).containsOnly(product2, product3);
 
 
     }
 
     @Test
-    void testGetProductThatBeenModified(){
+    void testGetProductThatBeenModified() {
 
-        LocalDateTime date = LocalDateTime.of(2020,9,20,20,20);
+        LocalDateTime date = LocalDateTime.of(2020, 9, 20, 20, 20);
 
-        Product product1 = new Product(11,"Smink", Categories.health,1,date,date);
-        Product product2 = new Product(33,"Parfym", Categories.health,5,date,date);
-        Product product3 = new Product(19,"Wax", Categories.health,5,date,date);
+        Product product1 = new Product(11, "Smink", Categories.health, 1, date, date);
+        Product product2 = new Product(33, "Parfym", Categories.health, 5, date, date);
+        Product product3 = new Product(19, "Wax", Categories.health, 5, date, date);
 
         warehouse.addProduct(product1);
         warehouse.addProduct(product2);
         warehouse.addProduct(product3);
 
-        warehouse.modifyProduct(11,"Deo",Categories.health,3);
+        warehouse.modifyProduct(11, "Deo", Categories.health, 3);
 
-        List <Product> modifiedProducts = warehouse.getProductThatBeenModified();
+        List<Product> modifiedProducts = warehouse.getProductThatBeenModified();
 
         assertNotNull(modifiedProducts);
 
-        assertThat(modifiedProducts).doesNotContain(product2,product3);
+        assertThat(modifiedProducts).doesNotContain(product2, product3);
 
         assertThat(modifiedProducts).containsExactly(new Product(11, "Deo", Categories.health, 3, date, LocalDateTime.now()));
     }
 
     @Test
-    void testGetCategoriesWithProducts(){
+    void testGetCategoriesWithProducts() {
 
         warehouse.addProduct(product1);
         warehouse.addProduct(product5);
         warehouse.addProduct(product6);
 
-        List <Categories> categoriesThatHaveProducts = warehouse.getCategoriesWithProducts();
+        List<Categories> categoriesThatHaveProducts = warehouse.getCategoriesWithProducts();
 
         assertNotNull(categoriesThatHaveProducts);
 
@@ -181,14 +200,14 @@ public class WarehouseTest {
     }
 
     @Test
-    void testGetHowManyProductsRelatedToCategory(){
+    void testGetHowManyProductsRelatedToCategory() {
         warehouse.addProduct(product1);
         warehouse.addProduct(product3);
         warehouse.addProduct(product5);
         warehouse.addProduct(product6);
 
-        int productsRelatedToCategory= warehouse.getHowManyProductsRelatedToCategory(Categories.sport);
-        int withNoProduct= warehouse.getHowManyProductsRelatedToCategory(Categories.workout);
+        int productsRelatedToCategory = warehouse.getHowManyProductsRelatedToCategory(Categories.sport);
+        int withNoProduct = warehouse.getHowManyProductsRelatedToCategory(Categories.workout);
 
         assertThat(productsRelatedToCategory).isEqualTo(2);
         assertThat(withNoProduct).isEqualTo(0);
@@ -197,7 +216,7 @@ public class WarehouseTest {
     }
 
     @Test
-    void testGetMap(){
+    void testGetMap() {
         warehouse.addProduct(product1);
         warehouse.addProduct(product3);
         warehouse.addProduct(product5);
@@ -205,12 +224,13 @@ public class WarehouseTest {
 
 
         Map<Character, Integer> map = warehouse.getMap();
-        assertNotEquals(1,'P');
-        assertEquals(2,map.get('B'));
+        assertNotEquals(1, 'P');
+        assertEquals(2, map.get('B'));
 
     }
+
     @Test
-    void testGetRecentMaxRating(){
+    void testGetRecentMaxRating() {
 
 
         // Will throw exception when no max rating don't have values or not max rating

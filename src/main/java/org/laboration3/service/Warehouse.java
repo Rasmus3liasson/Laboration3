@@ -44,6 +44,17 @@ public class Warehouse {
         return new ArrayList<>(productsArr);
     }
 
+    public List<Product> getProductBasedOnId(int id){
+        List<Product> productById = productsArr.stream()
+                .filter(p-> p.id() == id).toList();
+
+        if(productById.isEmpty()){
+        throw new NoSuchElementException("Finns ingen produkt med detta id");
+        }
+
+        return productById;
+    }
+
     public List<Product> getProductBasedOnCategory(Categories category) {
         List<Product> sortedByCategory = productsArr.stream()
                 .filter(p -> p.category().equals(category))
