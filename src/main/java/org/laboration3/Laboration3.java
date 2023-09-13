@@ -52,7 +52,7 @@ public class Laboration3 {
         Map<Character, Integer> mapExample = warehouse.getMap();
 
         for (Map.Entry<Character, Integer> p : mapExample.entrySet()) {
-            System.out.println("Key: " + p.getKey() + " : " + "Value " + p.getValue());
+            System.out.println("Nyckel: " + p.getKey() + " : " + "Värde " + p.getValue());
         }
 
         warehouse.modifyProduct(7,"Äpple",Categories.sport,2);
