@@ -16,9 +16,16 @@ public class Warehouse {
         // Check if name is not an empty string and if id already exist
         if (!p.name().isEmpty() &&
                 productsArr.stream()
-                        .noneMatch(productId -> productId.id() == p.id())) {
-            productsArr.add(p);
-        } else {
+                        .noneMatch(productId -> productId.id() == p.id())){
+            // Checks if rating is correct
+            if (p.rating() >= 1 && p.rating() <= 10) {
+                productsArr.add(p);
+            } else {
+                throw new IllegalArgumentException("Rating kan bara vara 1-10");
+            }
+        }
+
+        else {
             throw new IllegalArgumentException("Kan inte lägga till product " + p.id());
         }
     }

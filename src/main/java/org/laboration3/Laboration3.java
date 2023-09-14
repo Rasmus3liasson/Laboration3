@@ -4,46 +4,14 @@ import org.laboration3.entities.Categories;
 import org.laboration3.entities.Product;
 import org.laboration3.service.Warehouse;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 
 public class Laboration3 {
-    public static void main(String[] args) {
-        System.out.println("Hello There!");
-
-        Warehouse warehouse = new Warehouse();
-
-        Product product2 = new Product(
-                2,
-                "h",
-                Categories.health,
-                2,
-                LocalDateTime.of(2023, 9, 4, 15, 0),
-                LocalDateTime.of(2023, 9, 4, 15, 0)
-        );
-        Product product3 = new Product(
-                7,
-                "Knäskydd",
-                Categories.clothes,
-                5,
-                LocalDateTime.of(2023, 9, 4, 15, 0),
-                LocalDateTime.of(2023, 9, 4, 15, 0)
-        );
-        Product product4 = new Product(
-                10,
-                "Byxa",
-                Categories.clothes,
-                10,
-                LocalDateTime.of(2023, 9, 5, 15, 0),
-                LocalDateTime.of(2023, 9, 4, 16, 0)
-        );
-
-        warehouse.addProduct(product2);
-        warehouse.addProduct(product3);
-        warehouse.addProduct(product4);
-
+    public static void main(String[] args) throws InterruptedException {
+        Warehouse warehouse = getMockedWarehouse();
 
 
         // Example to show get map function
@@ -53,14 +21,44 @@ public class Laboration3 {
             System.out.println("Nyckel: " + p.getKey() + " : " + "Värde " + p.getValue());
         }
 
+        // Added a sleep to check method returns the product have that have been modified as excepted
+        TimeUnit.SECONDS.sleep(1);
         warehouse.modifyProduct(7, "Äpple", Categories.sport, 2);
 
-        List<Product> products = warehouse.getProductsArr();
+        List<Product> products = warehouse.getProductThatBeenModified();
 
 
         for (Product product : products) {
             System.out.println(product.toString());
         }
+    }
+
+    private static Warehouse getMockedWarehouse() {
+        Warehouse warehouse = new Warehouse();
+
+        Product product2 = new Product(
+                2,
+                "h",
+                Categories.health,
+                2
+        );
+        Product product3 = new Product(
+                7,
+                "Knäskydd",
+                Categories.clothes,
+                5
+        );
+        Product product4 = new Product(
+                10,
+                "Byxa",
+                Categories.clothes,
+                10
+        );
+
+        warehouse.addProduct(product2);
+        warehouse.addProduct(product3);
+        warehouse.addProduct(product4);
+        return warehouse;
     }
 }
 
