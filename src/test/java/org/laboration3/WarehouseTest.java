@@ -223,9 +223,9 @@ public class WarehouseTest {
         warehouse.addProduct(product6);
 
 
-        Map<Character, Integer> map = warehouse.getMap();
-        assertNotEquals(1, 'P');
-        assertEquals(2, map.get('B'));
+        Map<String, Integer> map = warehouse.getMap();
+        assertNotEquals(1, "P");
+        assertEquals(2, map.get("B"));
 
     }
 

@@ -105,25 +105,28 @@ public class Warehouse {
         return productsInCategory.size();
     }
 
-    public Map<Character, Integer> getMap() {
-        //List with only the names
+    public Map<String, Integer> getMap() {
+        // List with only the names
         List<String> productNames = new ArrayList<>();
         for (Product product : productsArr) {
             productNames.add(product.name());
         }
 
-        Map<Character, Integer> map = new HashMap<>();
+        Map<String, Integer> map = new HashMap<>();
         for (String productName : productNames) {
-            //Check to see it's not empty
+            // Check to see it's not empty
             if (productName != null && !productName.isEmpty()) {
                 char firstLetter = productName.charAt(0);
 
+                // Convert the Char to String
+                String key = String.valueOf(firstLetter);
+
                 // Sets the values to key and update map
-                Integer count = map.get(firstLetter);
+                Integer count = map.get(key);
                 if (count == null) {
-                    map.put(firstLetter, 1);
+                    map.put(key, 1);
                 } else {
-                    map.put(firstLetter, count + 1);
+                    map.put(key, count + 1);
                 }
             }
         }

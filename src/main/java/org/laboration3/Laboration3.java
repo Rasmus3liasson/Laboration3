@@ -40,8 +40,6 @@ public class Laboration3 {
                 LocalDateTime.of(2023, 9, 4, 16, 0)
         );
 
-
-
         warehouse.addProduct(product2);
         warehouse.addProduct(product3);
         warehouse.addProduct(product4);
@@ -49,13 +47,13 @@ public class Laboration3 {
 
 
         // Example to show get map function
-        Map<Character, Integer> mapExample = warehouse.getMap();
+        Map<String, Integer> mapExample = warehouse.getMap();
 
-        for (Map.Entry<Character, Integer> p : mapExample.entrySet()) {
+        for (Map.Entry<String, Integer> p : mapExample.entrySet()) {
             System.out.println("Nyckel: " + p.getKey() + " : " + "Värde " + p.getValue());
         }
 
-        warehouse.modifyProduct(7,"Äpple",Categories.sport,2);
+        warehouse.modifyProduct(7, "Äpple", Categories.sport, 2);
 
         List<Product> products = warehouse.getProductsArr();
 
