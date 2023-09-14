@@ -224,7 +224,8 @@ public class WarehouseTest {
 
 
         Map<String, Integer> map = warehouse.getMap();
-        assertNotEquals(1, "P");
+
+        assertNotEquals(1,map.get("P"));
         assertEquals(2, map.get("B"));
 
     }
