@@ -23,7 +23,7 @@ public class Laboration3 {
 
         // Added a sleep to check method returns the product have that have been modified as excepted
         TimeUnit.SECONDS.sleep(1);
-        warehouse.modifyProduct(7, "Äpple", Categories.sport, 2);
+        warehouse.modifyProduct(7, "", Categories.sport, 2);
 
         List<Product> products = warehouse.getProductThatBeenModified();
 

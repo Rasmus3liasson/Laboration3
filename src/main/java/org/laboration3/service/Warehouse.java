@@ -33,6 +33,9 @@ public class Warehouse {
         if (newRating < 1 || newRating > 10) {
             throw new IllegalArgumentException("Rating måste vara mellan 1-10");
         }
+        if (newName.trim().isEmpty()) {
+            throw new IllegalArgumentException("Måste fylla i ett på produkten");
+        }
         Optional<Product> product = productsArr.stream()
                 .filter(p -> p.id() == productId)
                 .findFirst();

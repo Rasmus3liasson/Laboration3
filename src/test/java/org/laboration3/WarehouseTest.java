@@ -79,8 +79,9 @@ public class WarehouseTest {
         // Check that it contains the new product
         assertThat(warehouse.getProductsArr().contains(productModified));
 
-        // Throws exception when rating is invalid
+        // Throws exception when rating or name is not valid
         assertThrows(IllegalArgumentException.class, () -> warehouse.modifyProduct(2, "Parfym", Categories.health, 11));
+        assertThrows(IllegalArgumentException.class, () -> warehouse.modifyProduct(2, " ", Categories.health, 4));
 
     }
 
