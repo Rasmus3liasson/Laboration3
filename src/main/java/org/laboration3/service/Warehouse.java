@@ -30,6 +30,9 @@ public class Warehouse {
     }
 
     public void modifyProduct(int productId, String newName, Categories newCategory, int newRating) {
+        if (newRating < 1 || newRating > 10) {
+            throw new IllegalArgumentException("Rating måste vara mellan 1-10");
+        }
         Optional<Product> product = productsArr.stream()
                 .filter(p -> p.id() == productId)
                 .findFirst();

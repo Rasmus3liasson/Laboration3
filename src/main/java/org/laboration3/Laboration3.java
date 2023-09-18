@@ -38,7 +38,7 @@ public class Laboration3 {
 
         Product product2 = Product.createProduct(
                 2,
-                "h",
+                "Hårblekning",
                 Categories.health,
                 2
         );

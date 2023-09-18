@@ -54,6 +54,7 @@ public class WarehouseTest {
     @Test
     void testModifyProduct() {
 
+
         warehouse.addProduct(product1);
         warehouse.addProduct(product3);
         warehouse.addProduct(product5);
@@ -71,6 +72,16 @@ public class WarehouseTest {
 
         // Check that the old product don't exist in the warehouse
         assertThat(warehouse.getProductsArr()).doesNotContain(product3BeforeModification);
+
+        warehouse.modifyProduct(2, "Parfym", Categories.health, 10);
+        Product productModified = warehouse.getProductsArr().get(1);
+
+        // Check that it contains the new product
+        assertThat(warehouse.getProductsArr().contains(productModified));
+
+        // Throws exception when rating is invalid
+        assertThrows(IllegalArgumentException.class, () -> warehouse.modifyProduct(2, "Parfym", Categories.health, 11));
+
     }
 
     @Test
@@ -221,7 +232,7 @@ public class WarehouseTest {
 
         Map<String, Integer> map = warehouse.getMap();
 
-        assertNotEquals(1,map.get("P"));
+        assertNotEquals(1, map.get("P"));
         assertEquals(2, map.get("B"));
 
     }
