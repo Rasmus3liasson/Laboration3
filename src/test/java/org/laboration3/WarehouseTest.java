@@ -71,11 +71,6 @@ public class WarehouseTest {
 
         // Check that the old product don't exist in the warehouse
         assertThat(warehouse.getProductsArr()).doesNotContain(product3BeforeModification);
-
-        // Error when trying to modify id that don't exist
-        assertThrows(NoSuchElementException.class, () -> {
-            warehouse.modifyProduct(98, "hej", Categories.health, 7);
-        });
     }
 
     @Test

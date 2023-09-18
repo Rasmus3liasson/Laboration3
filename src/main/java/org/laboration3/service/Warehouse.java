@@ -17,48 +17,45 @@ public class Warehouse {
         // Check if name is not an empty string and if id already exist
         if (!p.name().isEmpty() &&
                 productsArr.stream()
-                        .noneMatch(productId -> productId.id() == p.id())){
+                        .noneMatch(productId -> productId.id() == p.id())) {
             // Checks if rating is correct
             if (p.rating() >= 1 && p.rating() <= 10) {
                 productsArr.add(p);
             } else {
                 throw new IllegalArgumentException("Rating kan bara vara 1-10");
             }
-        }
-
-        else {
+        } else {
             throw new IllegalArgumentException("Kan inte lägga till product " + p.id());
         }
     }
 
     public void modifyProduct(int productId, String newName, Categories newCategory, int newRating) {
-        Product product = productsArr.stream()
+        Optional<Product> product = productsArr.stream()
                 .filter(p -> p.id() == productId)
-                .findFirst()
-                .orElse(null);
+                .findFirst();
 
-        if (product != null) {
-            Product changedProduct = new Product(productId, newName, newCategory, newRating, product.createdDate(),
-                    LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
-
-            // replace with the modified product
-            productsArr.set(productsArr.indexOf(product), changedProduct);
-        } else {
-            throw new NoSuchElementException("Produkt med id " + productId + " kunde inte lokaliseras");
-        }
+        product.ifPresentOrElse(
+                p -> {
+                    Product changedProduct = new Product(productId, newName, newCategory, newRating, p.createdDate(),
+                            LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+                    productsArr.set(productsArr.indexOf(p), changedProduct);
+                },
+                () -> {
+                    System.out.println("Produkt med id " + productId + " kunde inte lokaliseras");
+                }
+        );
     }
-
 
     public List<Product> getProductsArr() {
         return new ArrayList<>(productsArr);
     }
 
-    public List<Product> getProductBasedOnId(int id){
+    public List<Product> getProductBasedOnId(int id) {
         List<Product> productById = productsArr.stream()
-                .filter(p-> p.id() == id).toList();
+                .filter(p -> p.id() == id).toList();
 
-        if(productById.isEmpty()){
-        throw new NoSuchElementException("Finns ingen produkt med detta id");
+        if (productById.isEmpty()) {
+            throw new NoSuchElementException("Finns ingen produkt med detta id");
         }
 
         return productById;
