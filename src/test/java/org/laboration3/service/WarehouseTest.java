@@ -1,4 +1,4 @@
-package org.laboration3;
+package org.laboration3.service;
 
 import org.junit.jupiter.api.Test;
 import org.laboration3.entities.Categories;
