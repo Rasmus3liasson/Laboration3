@@ -6,6 +6,7 @@ import org.laboration3.entities.Product;
 import org.laboration3.service.Warehouse;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -179,7 +180,7 @@ public class WarehouseTest {
 
         assertThat(modifiedProducts).doesNotContain(product2, product3);
 
-        assertThat(modifiedProducts).containsExactly(new Product(11, "Deo", Categories.health, 3, date, LocalDateTime.now()));
+        assertThat(modifiedProducts).containsExactly(new Product(11, "Deo", Categories.health, 3, date, LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS)));
     }
 
     @Test

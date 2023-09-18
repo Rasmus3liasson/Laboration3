@@ -36,19 +36,19 @@ public class Laboration3 {
     private static Warehouse getMockedWarehouse() {
         Warehouse warehouse = new Warehouse();
 
-        Product product2 = new Product(
+        Product product2 = Product.createProduct(
                 2,
                 "h",
                 Categories.health,
                 2
         );
-        Product product3 = new Product(
+        Product product3 = Product.createProduct(
                 7,
                 "Knäskydd",
                 Categories.clothes,
                 5
         );
-        Product product4 = new Product(
+        Product product4 = Product.createProduct(
                 10,
                 "Byxa",
                 Categories.clothes,

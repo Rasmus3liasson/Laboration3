@@ -5,6 +5,7 @@ import org.laboration3.entities.Product;
 
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class Warehouse {
@@ -37,7 +38,8 @@ public class Warehouse {
                 .orElse(null);
 
         if (product != null) {
-            Product changedProduct = new Product(productId, newName, newCategory, newRating, product.createdDate(), LocalDateTime.now());
+            Product changedProduct = new Product(productId, newName, newCategory, newRating, product.createdDate(),
+                    LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
 
             // replace with the modified product
             productsArr.set(productsArr.indexOf(product), changedProduct);
