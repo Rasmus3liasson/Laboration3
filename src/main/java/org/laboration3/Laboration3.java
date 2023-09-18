@@ -21,7 +21,7 @@ public class Laboration3 {
             System.out.println("Nyckel: " + p.getKey() + " : " + "Värde " + p.getValue());
         }
 
-        // Added a sleep to check method returns the product have that have been modified as excepted
+        // Added a sleep to check method returns the product that have been modified as excepted
         TimeUnit.SECONDS.sleep(1);
         warehouse.modifyProduct(7, "", Categories.sport, 2);
 
