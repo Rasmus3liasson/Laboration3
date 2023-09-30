@@ -119,12 +119,10 @@ public class Warehouse {
     }
 
     public Map<String, Integer> getMap() {
-
         return productsArr.stream()
-                .map(Product::name)
                 .collect(Collectors.groupingBy(
-                        p -> String.valueOf(p.charAt(0)),
-                        Collectors.summingInt(p-> 1)
+                        p -> p.name().substring(0, 1),
+                        Collectors.summingInt(p -> 1)
                 ));
     }
 
