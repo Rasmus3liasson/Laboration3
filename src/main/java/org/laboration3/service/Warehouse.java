@@ -7,6 +7,7 @@ import org.laboration3.entities.Product;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Warehouse {
 
@@ -118,31 +119,13 @@ public class Warehouse {
     }
 
     public Map<String, Integer> getMap() {
-        // List with only the names
-        List<String> productNames = new ArrayList<>();
-        for (Product product : productsArr) {
-            productNames.add(product.name());
-        }
 
-        Map<String, Integer> map = new HashMap<>();
-        for (String productName : productNames) {
-            // Check to see it's not empty
-            if (productName != null && !productName.isEmpty()) {
-                char firstLetter = productName.charAt(0);
-
-                // Convert the Char to String
-                String key = String.valueOf(firstLetter);
-
-                // Sets the values to key and update map
-                Integer count = map.get(key);
-                if (count == null) {
-                    map.put(key, 1);
-                } else {
-                    map.put(key, count + 1);
-                }
-            }
-        }
-        return map;
+        return productsArr.stream()
+                .map(Product::name)
+                .collect(Collectors.groupingBy(
+                        p -> String.valueOf(p.charAt(0)),
+                        Collectors.summingInt(p-> 1)
+                ));
     }
 
     public List<Product> getRecentMaxRating() {

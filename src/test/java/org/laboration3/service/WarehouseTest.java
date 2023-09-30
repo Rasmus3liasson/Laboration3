@@ -36,25 +36,35 @@ public class WarehouseTest {
         // Check if Products have been added
         assertThat(warehouse.getProductsArr()).contains(product1, product3);
 
+    }
+
+    @Test
+    void testAddProductWithSameId() {
+        warehouse.addProduct(product1);
+
         // Shows that function won't add products with same iD
         assertThrows(IllegalArgumentException.class, () -> {
             warehouse.addProduct(product2);
         });
+        assertThat(warehouse.getProductsArr()).containsOnly(product1);
+        assertThat(warehouse.getProductsArr()).doesNotContain(product2);
+
+    }
+
+    @Test
+    void testAddProductWithEmptyProductName() {
 
         // Shows that product with empty string can't be added
         assertThrows(IllegalArgumentException.class, () -> {
             warehouse.addProduct(product4);
         });
 
-        // Test to see that products 2 and 4 haven't been added
-        assertThat(warehouse.getProductsArr()).doesNotContain(product2, product4);
-
+        assertThat(warehouse.getProductsArr()).doesNotContain(product4);
     }
+
 
     @Test
     void testModifyProduct() {
-
-
         warehouse.addProduct(product1);
         warehouse.addProduct(product3);
         warehouse.addProduct(product5);
@@ -64,7 +74,6 @@ public class WarehouseTest {
 
         warehouse.modifyProduct(2, "Mascara", Categories.health, 5);
 
-        warehouse.modifyProduct(2, "Mascara", Categories.health, 2);
 
         assertThat(warehouse).isNotNull();
         assertThat(warehouse.getProductsArr().get(1).name()).isEqualTo("Mascara");
@@ -78,12 +87,20 @@ public class WarehouseTest {
 
         // Check that it contains the new product
         assertThat(warehouse.getProductsArr().contains(productModified));
+    }
 
-        // Throws exception when rating or name is not valid
-        assertThrows(IllegalArgumentException.class, () -> warehouse.modifyProduct(2, "Parfym", Categories.health, 11));
+    @Test
+    void testCantModifyProductWithInvalidName(){
         assertThrows(IllegalArgumentException.class, () -> warehouse.modifyProduct(2, " ", Categories.health, 4));
 
     }
+
+    @Test
+    void testCantModifyProductWithWithInvalidrating(){
+        assertThrows(IllegalArgumentException.class, () -> warehouse.modifyProduct(2, "Parfym", Categories.health, 11));
+
+    }
+
 
     @Test
     void testGetProductArr() {
