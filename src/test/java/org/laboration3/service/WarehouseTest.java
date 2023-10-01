@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+
 public class WarehouseTest {
 
 
@@ -90,13 +91,13 @@ public class WarehouseTest {
     }
 
     @Test
-    void testCantModifyProductWithInvalidName(){
+    void testCantModifyProductWithInvalidName() {
         assertThrows(IllegalArgumentException.class, () -> warehouse.modifyProduct(2, " ", Categories.health, 4));
 
     }
 
     @Test
-    void testCantModifyProductWithWithInvalidrating(){
+    void testCantModifyProductWithWithInvalidRating() {
         assertThrows(IllegalArgumentException.class, () -> warehouse.modifyProduct(2, "Parfym", Categories.health, 11));
 
     }
@@ -257,8 +258,6 @@ public class WarehouseTest {
 
     @Test
     void testGetRecentMaxRating() {
-
-
         // Will throw exception when no max rating don't have values or not max rating
         assertThrows(NoSuchElementException.class, () -> warehouse.getRecentMaxRating());
 
@@ -275,7 +274,6 @@ public class WarehouseTest {
         List<Product> recentMaxRating = warehouse.getRecentMaxRating();
         assertEquals(2, recentMaxRating.size());
         assertTrue(recentMaxRating.contains(product2) && recentMaxRating.contains(product3));
-
 
     }
 
