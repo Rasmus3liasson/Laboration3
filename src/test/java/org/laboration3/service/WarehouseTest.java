@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-
 public class WarehouseTest {
 
 
@@ -257,7 +256,8 @@ public class WarehouseTest {
     }
 
     @Test
-    void testGetRecentMaxRating() {
+    void testRecentMaxRatingDontExist(){
+
         // Will throw exception when no max rating don't have values or not max rating
         assertThrows(NoSuchElementException.class, () -> warehouse.getRecentMaxRating());
 
@@ -265,16 +265,22 @@ public class WarehouseTest {
         warehouse.addProduct(product1);
         assertThrows(NoSuchElementException.class, () -> warehouse.getRecentMaxRating());
 
-        Product product2 = new Product(1, "Smink", Categories.health, 10, LocalDateTime.now(), LocalDateTime.now());
-        Product product3 = new Product(2, "Wax", Categories.health, 10, LocalDateTime.now(), LocalDateTime.now());
+    }
 
+    @Test
+    void testGetRecentMaxRating() {
+
+        Product product1 = new Product(1, "Smink", Categories.health, 10, LocalDateTime.now(), LocalDateTime.now());
+        Product product2 = new Product(2, "Wax", Categories.health, 10, LocalDateTime.now(), LocalDateTime.now());
+
+        warehouse.addProduct(product1);
         warehouse.addProduct(product2);
-        warehouse.addProduct(product3);
 
         List<Product> recentMaxRating = warehouse.getRecentMaxRating();
         assertEquals(2, recentMaxRating.size());
-        assertTrue(recentMaxRating.contains(product2) && recentMaxRating.contains(product3));
+        assertTrue(recentMaxRating.contains(product1) && recentMaxRating.contains(product2));
 
     }
-
 }
+
+
